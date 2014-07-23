@@ -40,4 +40,5 @@ public class Parser {
             throw new IllegalNameException(name);
         }
     }
+
 }
