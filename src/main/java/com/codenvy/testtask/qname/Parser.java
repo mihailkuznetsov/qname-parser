@@ -1,10 +1,11 @@
 package com.codenvy.testtask.qname;
 
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.*;
 
-/**
- * Created by mike on 21.07.14.
- */
 public class Parser {
 
     private static final String NONSPACE = "[^/:\\[\\]\\*\\'\\\"\\|\\s]";
@@ -29,16 +30,32 @@ public class Parser {
             + ONECHARLOCALNAME;
     private static final String PREFIXED_NAME = PREFIX + ":(" + LOCAL_NAME + ")";
     private static final String NAME = "(" + PREFIXED_NAME + ")|(" + SIMPLENAME + ")";
+
     private static final Pattern PATTERN = Pattern.compile(NAME);
 
-    QName parse(String name) throws IllegalNameException{
+    public QName parse(String name) throws IllegalNameException{
         Matcher matcher = PATTERN.matcher(name);
 
         if(matcher.matches()){
-            return new QName(name);
+            Map<String, String> map = getSplittedName(name);
+            return new QName(map.get("prefix"), map.get("localName"));
         } else {
             throw new IllegalNameException(name);
         }
     }
+
+    public Map<String, String> getSplittedName(String name) {
+        Map<String, String> map = new HashMap();
+        String[] splittedName = name.split(":");
+
+        if (splittedName.length == 2){
+            map.put("prefix",splittedName[0]);
+            map.put("localName",splittedName[1]);
+        } else {
+            map.put("localName",splittedName[0]);
+        }
+        return map;
+    }
+
 
 }
