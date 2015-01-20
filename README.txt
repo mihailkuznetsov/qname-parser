@@ -1,5 +1,5 @@
 Required:
-Apacыdsafsdfыhe Maven 3.2.2 or higher
+Apacыdsadsfgfgsdffsdfыhe Maven 3.2.2 or higher
 
 Installation:
 1. Open terminal/command prompt.
